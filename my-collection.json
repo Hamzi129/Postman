@@ -1,0 +1,475 @@
+{
+	"info": {
+		"_postman_id": "059f65c5-c8df-4ee1-92ba-f53c5c8b4469",
+		"name": "Deck API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39714257"
+	},
+	"item": [
+		{
+			"name": "Deck_Count",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json();",
+							"pm.test(\"Shuffle the cards and verify its one deck\" , ()=>{",
+							"    pm.expect(res.remaining).to.eq(52)",
+							"    pm.expect(res.shuffled).to.be.true",
+							"})",
+							"",
+							"",
+							"    const obj = {",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"success\": {",
+							"      \"type\": \"boolean\"",
+							"    },",
+							"    \"deck_id\": {",
+							"      \"type\": \"string\"",
+							"    },",
+							"    \"remaining\": {",
+							"      \"type\": \"integer\"",
+							"    },",
+							"    \"shuffled\": {",
+							"      \"type\": \"boolean\"",
+							"    }",
+							"  },",
+							"    \"additionalproperties\": false,",
+							"    \"required\": [\"success\", \"deck_id\", \"remaining\", \"shuffled\"]",
+							"}",
+							"pm.test(\"Schema is Pass\" , ()=>{",
+							"    pm.response.to.have.jsonSchema(obj);",
+							"",
+							"})",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1",
+					"protocol": "https",
+					"host": [
+						"deckofcardsapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"deck",
+						"new",
+						"shuffle",
+						""
+					],
+					"query": [
+						{
+							"key": "deck_count",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Draw_a_Card:",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json()",
+							"pm.test(\"Draw the deck and verify remaining\" , ()=>{",
+							"console.log (\"Res\", pm.response.json())",
+							"    pm.expect(res.remaining).to.eq(50)",
+							"        pm.expect(res.success).to.be.true",
+							"",
+							"})",
+							"",
+							"const obj = {",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"success\": {",
+							"      \"type\": \"boolean\"",
+							"    },",
+							"    \"deck_id\": {",
+							"      \"type\": \"string\"",
+							"    },",
+							"    \"cards\": {",
+							"      \"type\": \"array\",",
+							"      \"items\": [",
+							"        {",
+							"          \"type\": \"object\",",
+							"          \"properties\": {",
+							"            \"code\": {",
+							"              \"type\": \"string\"",
+							"            },",
+							"            \"image\": {",
+							"              \"type\": \"string\"",
+							"            },",
+							"            \"images\": {",
+							"              \"type\": \"object\",",
+							"              \"properties\": {",
+							"                \"svg\": {",
+							"                  \"type\": \"string\"",
+							"                },",
+							"                \"png\": {",
+							"                  \"type\": \"string\"",
+							"                }",
+							"              },",
+							"              \"required\": [",
+							"                \"svg\",",
+							"                \"png\"",
+							"              ]",
+							"            },",
+							"            \"value\": {",
+							"              \"type\": \"string\"",
+							"            },",
+							"            \"suit\": {",
+							"              \"type\": \"string\"",
+							"            }",
+							"          },",
+							"          \"required\": [",
+							"            \"code\",",
+							"            \"image\",",
+							"            \"images\",",
+							"            \"value\",",
+							"            \"suit\"",
+							"          ]",
+							"        },",
+							"        {",
+							"          \"type\": \"object\",",
+							"          \"properties\": {",
+							"            \"code\": {",
+							"              \"type\": \"string\"",
+							"            },",
+							"            \"image\": {",
+							"              \"type\": \"string\"",
+							"            },",
+							"            \"images\": {",
+							"              \"type\": \"object\",",
+							"              \"properties\": {",
+							"                \"svg\": {",
+							"                  \"type\": \"string\"",
+							"                },",
+							"                \"png\": {",
+							"                  \"type\": \"string\"",
+							"                }",
+							"              },",
+							"              \"required\": [",
+							"                \"svg\",",
+							"                \"png\"",
+							"              ]",
+							"            },",
+							"            \"value\": {",
+							"              \"type\": \"string\"",
+							"            },",
+							"            \"suit\": {",
+							"              \"type\": \"string\"",
+							"            }",
+							"          },",
+							"          \"required\": [",
+							"            \"code\",",
+							"            \"image\",",
+							"            \"images\",",
+							"            \"value\",",
+							"            \"suit\"",
+							"          ]",
+							"        }",
+							"      ]",
+							"    },",
+							"    \"remaining\": {",
+							"      \"type\": \"integer\"",
+							"    }",
+							"  },",
+							"  \"additionalProperties\": false,",
+							"   \"required\": [\"success\", \"deck_id\", \"remaining\", \"cards\"]",
+							"",
+							"}",
+							"pm.test(\"Schema is Pass\" , ()=>{",
+							"    pm.response.to.have.jsonSchema(obj);",
+							"})",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://deckofcardsapi.com/api/deck/{{id}}/draw/?count=2",
+					"protocol": "https",
+					"host": [
+						"deckofcardsapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"deck",
+						"{{id}}",
+						"draw",
+						""
+					],
+					"query": [
+						{
+							"key": "count",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Re shuffle the card",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json()",
+							"pm.test(\"Reshuffle the cards \" , ()=>{",
+							"console.log (\"Res\", pm.response.json())",
+							"    pm.expect(res.remaining).to.eq(52)",
+							"    pm.expect(res.success).to.be.true",
+							"    pm.expect(res.shuffled).to.be.true",
+							"})",
+							"",
+							" const obj = {",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"success\" : {",
+							"        \"type\": \"boolean\"",
+							"    },",
+							"    \"deck_id\": {",
+							"        \"type\": \"string\"",
+							"    },",
+							"    \"remaining\":{",
+							"        \"type\": \"integer\"",
+							"    },",
+							"    \"shuffled\" : {",
+							"        \"type\": \"boolean\"",
+							"    }",
+							"  },",
+							"    \"additionalProperties\": false,",
+							"    \"required\": [\"success\", \"deck_id\", \"remaining\", \"shuffled\" ]",
+							"",
+							"}",
+							"pm.test(\"Schema is Pass\" , ()=>{",
+							"    pm.response.to.have.jsonSchema(obj)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://deckofcardsapi.com/api/deck/{{id}}/shuffle/",
+					"protocol": "https",
+					"host": [
+						"deckofcardsapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"deck",
+						"{{id}}",
+						"shuffle",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Brand new deck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json()",
+							"pm.test(\"Reshuffle the cards \" , ()=>{",
+							"console.log (\"Res\", pm.response.json())",
+							"    pm.expect(res.remaining).to.eq(52)",
+							"    pm.expect(res.success).to.be.true",
+							"    pm.expect(res.shuffled).to.be.false",
+							"})",
+							"const obj = {",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"success\" : {",
+							"        \"type\": \"boolean\"",
+							"    },",
+							"    \"deck_id\": {",
+							"        \"type\": \"string\"",
+							"    },",
+							"    \"remaining\":{",
+							"        \"type\": \"integer\"",
+							"    },",
+							"    \"shuffled\" : {",
+							"        \"type\": \"boolean\"",
+							"    }",
+							"  },",
+							"    \"additionalproperties\": false,",
+							"    \"required\": [\"success\" , \"deck_id\" , \"remaining\", \"shuffled\"]",
+							"}",
+							"pm.test(\"Schema is Pass\" , ()=>{",
+							"    pm.response.to.have.jsonSchema(obj)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://deckofcardsapi.com/api/deck/new/",
+					"protocol": "https",
+					"host": [
+						"deckofcardsapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"deck",
+						"new",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Partial deck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json()",
+							"pm.test(\"Reshuffle the cards \" , ()=>{",
+							"console.log (\"Res\", pm.response.json())",
+							"    pm.expect(res.remaining).to.eq(12)",
+							"    pm.expect(res.success).to.be.true",
+							"    pm.expect(res.shuffled).to.be.true",
+							"})",
+							"const obj = {",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"success\" : {",
+							"        \"type\": \"boolean\"",
+							"    },",
+							"    \"deck_id\": {",
+							"        \"type\": \"string\"",
+							"    },",
+							"    \"remaining\":{",
+							"        \"type\": \"integer\"",
+							"    },",
+							"    \"shuffled\" : {",
+							"        \"type\": \"boolean\"",
+							"    }",
+							"  },",
+							"    \"additionalproperties\": false,",
+							"    \"required\": [\"success\", \"deck_id\", \"remaining\", \"shuffled\" ]",
+							"}",
+							"pm.test(\"Schema is Pass\" , ()=>{",
+							"    pm.response.to.have.jsonSchema(obj)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://deckofcardsapi.com/api/deck/new/shuffle/?cards=AS,2S,KS,AD,2D,KD,AC,2C,KC,AH,2H,KH",
+					"protocol": "https",
+					"host": [
+						"deckofcardsapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"deck",
+						"new",
+						"shuffle",
+						""
+					],
+					"query": [
+						{
+							"key": "cards",
+							"value": "AS,2S,KS,AD,2D,KD,AC,2C,KC,AH,2H,KH"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"var res = pm.response.json();",
+					"var deck_id = res.deck_id",
+					"pm.collectionVariables.set(\"id\", deck_id);  // For collection variable",
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "deck_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "id",
+			"value": ""
+		}
+	]
+}
